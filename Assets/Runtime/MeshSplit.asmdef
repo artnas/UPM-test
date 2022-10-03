@@ -1,0 +1,34 @@
+{
+    "name": "MeshSplit",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.burst",
+            "expression": "1.5.1",
+            "define": "Unity.Burst"
+        },
+        {
+            "name": "com.unity.collections",
+            "expression": "1.1.0",
+            "define": "Unity.Collections"
+        },
+        {
+            "name": "com.unity.mathematics",
+            "expression": "1.2.0",
+            "define": "Unity.Mathematics"
+        }
+    ],
+    "noEngineReferences": false
+}

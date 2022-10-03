@@ -1,0 +1,26 @@
+{
+  "name": "com.artnas.meshsplit",
+  "displayName": "Mesh Split",
+  "author": {
+    "name": "Artur Nasiadko",
+    "email": "Art.Nasiadko@gmail.com",
+    "url": "https://github.com/artnas"
+  },
+  "version": "1.1.1",
+  "unity": "2021.1",
+  "hideInEditor": false,
+  "description": "Split meshes into chunks of a given size",
+  "documentationUrl": "https://github.com/artnas/Unity-Plane-Mesh-Splitter",
+  "dependencies": {
+    "com.unity.burst": "1.5.1",
+    "com.unity.collections": "1.1.0",
+    "com.unity.mathematics": "1.2.0"
+  },
+  "registry": "https://npm.pkg.github.com",
+  "type": "tool",
+  "repository": {
+    "type": "git", 
+    "url": "https://github.com/artnas/Unity-Plane-Mesh-Splitter.git", 
+    "directory": "com.artnas.meshsplit"
+  }
+}
