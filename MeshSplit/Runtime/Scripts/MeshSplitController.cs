@@ -63,6 +63,22 @@ namespace MeshSplit.Scripts
         {
             var meshSplitter = new MeshSplitter(Parameters, Verbose);
             var subMeshData = meshSplitter.Split(_baseMesh);
+            
+            // sort the children
+            subMeshData.Sort(delegate((Vector3Int gridPoint, Mesh mesh) a, (Vector3Int gridPoint, Mesh mesh) b)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    var compare = a.gridPoint[i].CompareTo(b.gridPoint[i]);
+
+                    if (compare != 0)
+                    {
+                        return compare;
+                    }
+                }
+
+                return 0;
+            });
 
             foreach (var (gridPoint, mesh) in subMeshData)
             {
@@ -101,6 +117,14 @@ namespace MeshSplit.Scripts
                 newMeshRenderer.sortingOrder = _baseRenderer.sortingOrder;
                 newMeshRenderer.sortingLayerID = _baseRenderer.sortingLayerID;
                 newMeshRenderer.shadowCastingMode = _baseRenderer.shadowCastingMode;
+                newMeshRenderer.receiveShadows = _baseRenderer.receiveShadows;
+                newMeshRenderer.receiveGI = _baseRenderer.receiveGI;
+                newMeshRenderer.lightProbeUsage = _baseRenderer.lightProbeUsage;
+                newMeshRenderer.rayTracingMode = _baseRenderer.rayTracingMode;
+                newMeshRenderer.reflectionProbeUsage = _baseRenderer.reflectionProbeUsage;
+                newMeshRenderer.staticShadowCaster = _baseRenderer.staticShadowCaster;
+                newMeshRenderer.motionVectorGenerationMode = _baseRenderer.motionVectorGenerationMode;
+                newMeshRenderer.allowOcclusionWhenDynamic = _baseRenderer.allowOcclusionWhenDynamic;
             }
 
             if (Parameters.GenerateColliders)
@@ -132,12 +156,21 @@ namespace MeshSplit.Scripts
         private void DestroyChildren()
         {
             // find child submeshes which are not in child list
-            var unassignedSubMeshes = GetComponentsInChildren<MeshRenderer>()
-                .Where(child => child.name.Contains("SubMesh") && !Children.Contains(child.gameObject));
-
-            foreach (var subMesh in unassignedSubMeshes)
+            var childCount = transform.childCount;
+            if (childCount != Children.Count)
             {
-                Children.Add(subMesh.gameObject);
+                var unassignedSubMeshes = GetComponentsInChildren<MeshRenderer>()
+                    .Where(child => child.name.Contains("SubMesh") && !Children.Contains(child.gameObject));
+
+                var count = 0;
+
+                foreach (var subMesh in unassignedSubMeshes)
+                {
+                    Children.Add(subMesh.gameObject);
+                    count++;
+                }
+                
+                if (Verbose) Debug.Log($"found {count} unassigned submeshes");
             }
 
             foreach (var t in Children)
@@ -146,6 +179,8 @@ namespace MeshSplit.Scripts
                 DestroyImmediate(t.GetComponent<MeshFilter>().sharedMesh);
                 DestroyImmediate(t);
             }
+            
+            if (Verbose) Debug.Log($"destroyed {Children.Count} submeshes");
 
             Children.Clear();
         }

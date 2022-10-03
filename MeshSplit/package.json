@@ -15,12 +15,5 @@
     "com.unity.burst": "1.5.1",
     "com.unity.collections": "1.1.0",
     "com.unity.mathematics": "1.2.0"
-  },
-  "registry": "https://npm.pkg.github.com",
-  "type": "tool",
-  "repository": {
-    "type": "git", 
-    "url": "https://github.com/artnas/Unity-Plane-Mesh-Splitter.git", 
-    "directory": "com.artnas.meshsplit"
   }
 }
